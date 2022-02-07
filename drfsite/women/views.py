@@ -4,21 +4,24 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from women.models import Women
-from women.serialazers import WomenSerialazer
+from women.serialazers import WomenSerializer
 
 
 class WomenApiView(APIView):
     def get(self, request):
-        lst = Women.objects.all().values()
-        return Response({'posts': list(lst)})
+        w = Women.objects.all()
+        return Response({'posts': WomenSerializer(w, many=True).data})
 
     def post(self, request):
+        serializer = WomenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)  # проверяем на корректность введеные данные
+
         post_new = Women.objects.create(
             title=request.data['title'],
             content=request.data['content'],
             cat_id=request.data['cat_id'],
         )
-        return Response({'post': model_to_dict(post_new)})  # преобразовывает объект в словарь
+        return Response({'post': WomenSerializer(post_new).data})  # преобразовывает объект в словарь
 
 
 # class WomenApiView(generics.ListAPIView):

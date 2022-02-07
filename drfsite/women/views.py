@@ -10,7 +10,7 @@ from women.serialazers import WomenSerializer
 class WomenApiView(APIView):
     def get(self, request):
         w = Women.objects.all()
-        return Response({'posts': WomenSerializer(w, many=True).data})
+        return Response({'posts': WomenSerializer(w, many=True).data})  # many значит читать все записи
 
     def post(self, request):
         serializer = WomenSerializer(data=request.data)

@@ -1,4 +1,7 @@
+import io
+
 from rest_framework import serializers
+from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 
 from .models import *
@@ -21,3 +24,11 @@ def encode():
     print(model_sr.data, type(model_sr.data), sep='\n')
     json = JSONRenderer().render(model_sr.data)  # преобразуем в байтовую json строку
     print(json)
+
+
+def decode():
+    stream = io.BytesIO(b'{"title":"Bibi","content":"Cool"}')
+    data = JSONParser().parse(stream)
+    serializer = WomenSerialazer(data=data)
+    serializer.is_valid()
+    print(serializer.validated_data)

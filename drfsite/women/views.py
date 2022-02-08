@@ -43,6 +43,7 @@ class WomenApiView(APIView):
 
         return Response({'post': "delete post - " + str(pk)})
 
-# class WomenApiView(generics.ListAPIView):
-#     queryset = Women.objects.all()
-#     serializer_class = WomenSerialazer
+
+class WomenAPIList(generics.ListCreateAPIView):
+    queryset = Women.objects.all()
+    serializer_class = WomenSerializer

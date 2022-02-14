@@ -8,28 +8,10 @@ from rest_framework.response import Response
 from .models import *
 
 
-# class WomenModel:
-#     def __init__(self, title, content):
-#         self.title = title
-#         self.content = content
-
-
 class WomenSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())  # по умолчанию подставляет пользователя при добавлении статьи
+
     class Meta:
         model = Women
         fields = "__all__"
 
-# def encode():
-#     model = WomenModel('Bibi', 'Cool')
-#     model_sr = WomenSerialazer(model)
-#     print(model_sr.data, type(model_sr.data), sep='\n')
-#     json = JSONRenderer().render(model_sr.data)  # преобразуем в байтовую json строку
-#     print(json)
-#
-#
-# def decode():
-#     stream = io.BytesIO(b'{"title":"Bibi","content":"Cool"}')
-#     data = JSONParser().parse(stream)
-#     serializer = WomenSerialazer(data=data)
-#     serializer.is_valid()
-#     print(serializer.validated_data)
